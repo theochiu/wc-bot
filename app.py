@@ -35,11 +35,10 @@ def send_message(message):
 def get_message():
 	# gets most recent message
 	response = requests.get("https://api.groupme.com/v3/groups/" + groupid + "/messages?token=" + token)
-	print(response.json())
 
 	m_time = response.json()["response"]["messages"][0]["created_at"]
 	message = response.json()["response"]["messages"][0]["text"]
-	sender = response.json()["response"]["messages"][0]["id"]
+	sender = response.json()["response"]["messages"][0]["sender_id"]
 
 	return m_time, message, sender
 
@@ -65,7 +64,10 @@ def main():
 	elapsed = (tic - m_time) / 60
 
 	if elapsed <= 5 and "#announcement" not in message:
-		dm(sender, "Hello, my name is Jarvis")
+		dm(sender, "This is an automated response. Are you sure that was an announcement? Please preface announcements with \#anouncement. If the message was sent in the wrong chat by mistake, kindly delete it")
 
 if __name__ == '__main__':
-	main()
+	while(1):
+		main()
+		# send_message("Jarvis here...")
+	
