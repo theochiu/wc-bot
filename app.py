@@ -8,6 +8,7 @@ import requests
 import time
 import random
 import string 
+import datetime
 
 # silence stupid warnings
 import urllib3
@@ -41,7 +42,10 @@ def send_message(message):
 def get_message():
 	# gets most recent message
 	response = requests.get("https://api.groupme.com/v3/groups/" + groupid + "/messages?token=" + token)
-	# print(response.json())
+	while response.status_code != 200:			# request until valid
+		response = requests.get("https://api.groupme.com/v3/groups/" + groupid + "/messages?token=" + token)
+
+	
 	m_time = response.json()["response"]["messages"][0]["created_at"]
 	message = response.json()["response"]["messages"][0]["text"]
 	sender = response.json()["response"]["messages"][0]["sender_id"]
@@ -60,7 +64,6 @@ def dm(sender, message):
 	}
 
 	response = send("https://api.groupme.com/v3/direct_messages?token=" + token, data)
-	# print(response.text)
 
 def main():
 	global processed
@@ -72,16 +75,13 @@ def main():
 	elapsed = (tic - m_time) / 60
 
 	if elapsed <= 5 and "#announcement" not in message and m_id not in processed and m_time > start_time and sender != "system":
-		print("\nviolation detected: sending DM")
-		print("violation id: {}\n".format(m_id))
+		print("violation detected: sending DM")
 		dm(sender, "This is an automated response. Are you sure that was an announcement? Include #announcement in the future. If the message was sent in the wrong chat by mistake, kindly delete it")
 		processed.append(m_id)
 		if (len(processed) > 100):
 			processed = processed[50:]
 
 if __name__ == '__main__':
-	print("Jarvis is running")
+	print("Jarvis is running\n")
 	while(1):
-		main()
-
-	
+		main()	
