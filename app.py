@@ -7,7 +7,7 @@
 import requests
 import time
 import random
-import string
+import string 
 
 # groupme access token (api access)
 token = r'06lbAWJcU77H9lyCNVSSuVQfpzl4GVx32880yGAr'
