@@ -67,6 +67,7 @@ def main():
 		dm(sender, "This is an automated response. Are you sure that was an announcement? Please preface announcements with \#anouncement. If the message was sent in the wrong chat by mistake, kindly delete it")
 
 if __name__ == '__main__':
+	print("Jarvis is running")
 	while(1):
 		main()
 		# send_message("Jarvis here...")
