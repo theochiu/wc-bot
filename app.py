@@ -70,6 +70,10 @@ def main():
 	global processed
 	m_time, message, sender, m_id, name = get_message()
 
+	if m_id not in processed:
+		print("\nnew message: \n{}: {}".format(name, message))
+		processed.append(m_id)
+
 	# get unix time
 	tic = int(time.time())
 
