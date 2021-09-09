@@ -71,7 +71,7 @@ def main():
 
 	elapsed = (tic - m_time) / 60
 
-	if elapsed <= 5 and "#announcement" not in message and m_id not in processed and m_time > start_time:
+	if elapsed <= 5 and "#announcement" not in message and m_id not in processed and m_time > start_time and sender != "system":
 		print("\nviolation detected: sending DM")
 		print("violation id: {}\n".format(m_id))
 		dm(sender, "This is an automated response. Are you sure that was an announcement? Include #announcement in the future. If the message was sent in the wrong chat by mistake, kindly delete it")
