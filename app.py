@@ -50,7 +50,6 @@ def get_message():
 	return m_time, message, sender, m_id
 
 def dm(sender, message):
-	print("violation detected: sending DM")
 	rand_string = "".join(random.choice(string.ascii_lowercase) for i in range(10))
 	data = {
 		"direct_message": {
@@ -61,7 +60,7 @@ def dm(sender, message):
 	}
 
 	response = send("https://api.groupme.com/v3/direct_messages?token=" + token, data)
-	print(response.text)
+	# print(response.text)
 
 def main():
 	global processed
@@ -73,6 +72,8 @@ def main():
 	elapsed = (tic - m_time) / 60
 
 	if elapsed <= 5 and "#announcement" not in message and m_id not in processed and m_time > start_time:
+		print("\nviolation detected: sending DM")
+		print("violation id: {}\n".format(m_id))
 		dm(sender, "This is an automated response. Are you sure that was an announcement? Include #announcement in the future. If the message was sent in the wrong chat by mistake, kindly delete it")
 		processed.append(m_id)
 		if (len(processed) > 100):
