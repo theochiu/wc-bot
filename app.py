@@ -9,6 +9,10 @@ import time
 import random
 import string 
 
+# silence stupid warnings
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 # groupme access token (api access)
 token = r'06lbAWJcU77H9lyCNVSSuVQfpzl4GVx32880yGAr'
 processed = []
