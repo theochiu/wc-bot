@@ -17,6 +17,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # groupme access token (api access)
 token = r'06lbAWJcU77H9lyCNVSSuVQfpzl4GVx32880yGAr'
 processed = []
+read = []
 
 # we'll use this later
 announcements_groupid = r'69765237'
@@ -68,11 +69,14 @@ def dm(sender, message):
 
 def main():
 	global processed
+	global read
 	m_time, message, sender, m_id, name = get_message()
 
-	if m_id not in processed:
+	if m_id not in read:
 		print("\nnew message: \n{}: {}".format(name, message))
-		processed.append(m_id)
+		read.append(m_id)
+		if len(read) > 100:
+			read = read[50:]
 
 	# get unix time
 	tic = int(time.time())
