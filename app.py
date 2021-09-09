@@ -50,8 +50,9 @@ def get_message():
 	message = response.json()["response"]["messages"][0]["text"]
 	sender = response.json()["response"]["messages"][0]["sender_id"]
 	m_id = response.json()["response"]["messages"][0]["id"]
+	name = response.json()["response"]["messages"][0]["name"]
 
-	return m_time, message, sender, m_id
+	return m_time, message, sender, m_id, name
 
 def dm(sender, message):
 	rand_string = "".join(random.choice(string.ascii_lowercase) for i in range(10))
@@ -67,7 +68,7 @@ def dm(sender, message):
 
 def main():
 	global processed
-	m_time, message, sender, m_id = get_message()
+	m_time, message, sender, m_id, name = get_message()
 
 	# get unix time
 	tic = int(time.time())
@@ -75,7 +76,7 @@ def main():
 	elapsed = (tic - m_time) / 60
 
 	if elapsed <= 5 and "#announcement" not in message and m_id not in processed and m_time > start_time and sender != "system":
-		print("violation detected: sending DM")
+		print("violation detected: sending DM to {}".format(name))
 		dm(sender, "This is an automated response. Are you sure that was an announcement? Include #announcement in the future. If the message was sent in the wrong chat by mistake, kindly delete it")
 		processed.append(m_id)
 		if (len(processed) > 100):
